@@ -3,74 +3,71 @@ import Foundation
 public class Workplace {
     public init() {}
 
-    public var availableSeatsAtWork = [String?]() {
+    public var seats = [String?]() {
         didSet {
-            let availableSeatsAtWorkVerbal = availableSeatsAtWork.map { availableSeat -> String in
-                if let occupiedSeatWithPerson = availableSeat {
-                    return occupiedSeatWithPerson
+            let seatsVerbose = seats.map { seat -> String in
+                if let occupiedSeat = seat {
+                    return occupiedSeat
                 }
 
                 return ""
             }
 
-            print("Current seat explotation: \(availableSeatsAtWorkVerbal).\n")
+            print("Current seat explotation: \(seatsVerbose).")
         }
     }
 
     /// Set the amount of empty seats at workplace.
     ///
     /// - Parameter count: Number of empty seats to generate. Should be between 5-15.
-    public func setEmptySeats(emptySeatCount count: Int) {
-        guard count >= 5 else {
-            print("This is not a start-up, there should be at least 5 available seats not \(count)!")
+    public func setEmptySeat(count: Int) {
+        guard 5 ... 15 ~= count else {
+            if count < 5 {
+                print("Lowest valid seat count is 5, received \(count).")
+            } else if count > 15 {
+                print("Highest valid seat count is 15, received \(count).")
+            }
+
             return
         }
 
-        guard count <= 15 else {
-            print("Ambitious, but this is not a \"Apple\" Inc., we don't have to budget for more than 15 seats!")
-            return
-        }
-
-        var tempAvailableSeats: [String?] = []
+        var tempSeats: [String?] = []
 
         for _ in 0 ..< count {
-            tempAvailableSeats.append(nil)
+            tempSeats.append(nil)
         }
 
-        availableSeatsAtWork = tempAvailableSeats
+        seats = tempSeats
     }
 
     /// Generate number of people that will come to work and occupy available seat of their choosing.
     ///
     /// - Parameter amoutOfPeople: Amout of people that will come to work. Should not exceed number of available seats.
-    public func peopleComeToWork(amoutOfPeople: Int) {
-        let availableSeatCount = availableSeatsAtWork.count
+    public func employeesInOffice(employeeCount: Int) {
+        let seatCount = seats.count
 
-        guard amoutOfPeople <= availableSeatCount else {
-            let amoutWithoutSeat = amoutOfPeople - availableSeatCount
-            print("Oh-oh! There were \(availableSeatCount) available seats, and \(amoutOfPeople) people came to work. \(amoutWithoutSeat) people will have to work from home.")
+        guard employeeCount <= seatCount else {
+            print("There were \(seatCount) available seats, and \(employeeCount) employees came to workplace. \(employeeCount - seatCount) employees are missing seats.")
+
             return
         }
 
-        var availableSeatIndexes = (0 ..< availableSeatCount).map { $0 }
+        var seatIndexes = (0 ..< seatCount).map { $0 }
 
-        for _ in 0 ..< amoutOfPeople {
-            let person = generateRandomPerson()
+        for _ in 0 ..< employeeCount {
+            let employee = person()
 
-            if let index = availableSeatIndexes.randomElement() {
-                print("\(person) came to work, took seat number \(index + 1).")
-                availableSeatsAtWork[index] = person
+            if let index = seatIndexes.randomElement() {
+                print("\(employee) came to work, took seat number \(index + 1).")
+                seats[index] = employee
 
-                let availableSeatIndexesLeft = availableSeatIndexes.filter { $0 != index }
-                availableSeatIndexes = availableSeatIndexesLeft
+                let newSeatIndexes = seatIndexes.filter { $0 != index }
+                seatIndexes = newSeatIndexes
             }
         }
     }
 
-    private func generateRandomPerson() -> String {
-        let availablePeople = ["👨🏽‍💻", "👩🏼‍💻"]
-        let randomPerson = availablePeople.randomElement() ?? "👨🏻‍💼"
-
-        return randomPerson
+    private func person() -> String {
+        return ["👨🏽‍💻", "👩🏼‍💻"].randomElement() ?? "👨🏻‍💼"
     }
 }
