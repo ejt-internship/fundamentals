@@ -16,26 +16,26 @@ public func isSeatAvailable(_ seatIndex: Int) -> Bool {
 
 public func occupyEmptySeat(index: Int, employee: String = "👩🏻‍💼") {
     if index >= 0 && index < workplace.seats.count {
-    if isSeatAvailable(index) {
-        workplace.seats[index] = employee
-    } else {
-        if let oldEmployee = workplace.seats[index] {
-            print("\(employee) tried to take seat number \(index + 1), unfortunatelly that seat was occupied by \(oldEmployee).")
+        if isSeatAvailable(index) {
+            workplace.seats[index] = employee
+        } else {
+            if let oldEmployee = workplace.seats[index] {
+                print("\(employee) tried to take seat number \(index + 1), unfortunatelly that seat was occupied by \(oldEmployee).")
+            }
         }
-    }
     } else {
-            print ("Something went wrong! index must be between 0 and \(workplace.seats.count - 1)!")
+        print ("Something went wrong! index must be between 0 and \(workplace.seats.count - 1)!")
     }
 }
 
 public func workIsLeftBy(employee: String) {
     if workplace.seats.contains(employee) {
-    for index in 0 ... workplace.seats.count - 1 {
-        let seat = workplace.seats[index]
-        if seat == employee {
-            workplace.seats[index] = nil
+        for index in 0 ... workplace.seats.count - 1 {
+            let seat = workplace.seats[index]
+            if seat == employee {
+                workplace.seats[index] = nil
+            }
         }
-    }
     } else {
         print("\(employee) seems to be out-of-office.")
     }
