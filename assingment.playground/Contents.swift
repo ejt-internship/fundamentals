@@ -3,7 +3,7 @@ import Foundation
 private let workplace = Workplace()
 
 workplace.setEmptySeat(count: 9)
-workplace.employeesInOffice(employeeCount: 6)
+workplace.employeesInOffice(employeeCount: 2)
 
 public func isSeatAvailable(_ seatIndex: Int) -> Bool {
     let seat = workplace.seats[seatIndex]
@@ -29,13 +29,16 @@ public func occupyEmptySeat(index: Int, employee: String = "👩🏻‍💼") {
 }
 
 public func workIsLeftBy(employee: String) {
+    if workplace.seats.contains(employee) {
     for index in 0 ... workplace.seats.count - 1 {
         let seat = workplace.seats[index]
         if seat == employee {
             workplace.seats[index] = nil
         }
     }
+    } else {
         print("\(employee) seems to be out-of-office.")
+    }
 }
 
 occupyEmptySeat(index: 8, employee: "👩🏻‍💼")
