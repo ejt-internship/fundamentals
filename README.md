@@ -60,6 +60,12 @@ struct Car {
 }
 ```
 
+[`typealias`](https://medium.com/pretty-swifty/swift-101-typealias-9d6a794bc59f)
+
+```swift
+typealias Cars = [Car]
+```
+
 And `JSON` class
 
 ```swift
