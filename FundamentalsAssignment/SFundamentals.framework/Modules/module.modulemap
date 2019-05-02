@@ -1,0 +1,11 @@
+framework module SFundamentals {
+  umbrella header "SFundamentals.h"
+
+  export *
+  module * { export * }
+}
+
+module SFundamentals.Swift {
+    header "SFundamentals-Swift.h"
+    requires objc
+}
