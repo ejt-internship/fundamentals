@@ -9,12 +9,47 @@
 import UIKit
 import SFundamentals
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    @IBOutlet var search: UISearchBar!
+    @IBOutlet var tableView: UITableView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print(Car.init(make: "audi", model: "A4", body: .sedan, transmission: .automatic, year: 2019, fuelType: .diesel))
+    var carsArray : [Car] = []
+
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return carsArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
+        let newValue = carsArray[indexPath.row]
+        cell.configureCell(car: newValue)
+        
+            return cell
+        
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+       
+        print(carsArray.count)
+
+        
+        JSON.shared.fetch { (carValues) in
+            Car.self
+            DispatchQueue.main.async {
+                let newData = self.carsArray
+                self.carsArray = carValues
+                    
+                print(carValues)
+                self.tableView.reloadData()
+            }
+    }
+
+}
 }
 

@@ -14,6 +14,7 @@
 		7F259FCD227AD109008F5FA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F259FCB227AD109008F5FA3 /* LaunchScreen.storyboard */; };
 		7F259FDA227AD2C5008F5FA3 /* SFundamentals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F259FD9227AD2C5008F5FA3 /* SFundamentals.framework */; };
 		7F259FDB227AD2C5008F5FA3 /* SFundamentals.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F259FD9227AD2C5008F5FA3 /* SFundamentals.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7F259FE1227B380B008F5FA3 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F259FE0227B380B008F5FA3 /* TableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		7F259FCC227AD109008F5FA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F259FCE227AD109008F5FA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F259FD9227AD2C5008F5FA3 /* SFundamentals.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SFundamentals.framework; sourceTree = "<group>"; };
+		7F259FE0227B380B008F5FA3 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				7F259FC2227AD107008F5FA3 /* AppDelegate.swift */,
+				7F259FE0227B380B008F5FA3 /* TableViewCell.swift */,
 				7F259FC4227AD107008F5FA3 /* ViewController.swift */,
 				7F259FC6227AD107008F5FA3 /* Main.storyboard */,
 				7F259FC9227AD109008F5FA3 /* Assets.xcassets */,
@@ -155,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F259FE1227B380B008F5FA3 /* TableViewCell.swift in Sources */,
 				7F259FC5227AD107008F5FA3 /* ViewController.swift in Sources */,
 				7F259FC3227AD107008F5FA3 /* AppDelegate.swift in Sources */,
 			);
