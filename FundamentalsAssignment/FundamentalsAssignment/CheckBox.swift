@@ -9,7 +9,7 @@
 import UIKit
 
 class CheckBox: UIButton {
-
+    
     let checkedImage = UIImage(named: "checked_checkbox")
     let unCheckedImage = UIImage(named: "unchecked_checkbox")
     
@@ -19,12 +19,10 @@ class CheckBox: UIButton {
         }
     }
     
-    
     override func awakeFromNib() {
         self.addTarget(self, action: #selector(CheckBox.buttonClicked), for: UIControl.Event.touchUpInside)
         self.updateImage()
     }
-    
     
     func updateImage() {
         if isChecked == true{
@@ -32,7 +30,6 @@ class CheckBox: UIButton {
         }else{
             self.setImage(unCheckedImage, for: [])
         }
-        
     }
     
     @objc func buttonClicked(sender:UIButton) {
@@ -40,6 +37,4 @@ class CheckBox: UIButton {
             isChecked = !isChecked
         }
     }
-
-
 }

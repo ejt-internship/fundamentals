@@ -10,7 +10,7 @@ import UIKit
 import  SFundamentals
 
 class TableViewCell: UITableViewCell {
-
+    
     
     @IBOutlet var make: UILabel!
     @IBOutlet var model: UILabel!
@@ -22,7 +22,6 @@ class TableViewCell: UITableViewCell {
     @IBOutlet var acceleration: UILabel!
     @IBOutlet var horsepower: UILabel!
     @IBOutlet var price: UILabel!
-    
     
     func configureCell(car: Car) {
         self.make.text = "Brand: \(car.make)"
@@ -36,15 +35,4 @@ class TableViewCell: UITableViewCell {
         self.horsepower.text = "Horsepower: \(car.horsepower)"
         self.price.text = "Price: \(car.price) $"
     }
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//        // Initialization code
-//    }
-//
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
-
 }

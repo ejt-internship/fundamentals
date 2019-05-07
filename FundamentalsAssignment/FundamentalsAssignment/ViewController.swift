@@ -12,7 +12,6 @@ import SFundamentals
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var searchBar: UISearchBar!
-    //    @IBOutlet var search: UISearchBar!
     @IBOutlet var tableView: UITableView!
     
     @IBOutlet var yearLabel: UILabel!
@@ -26,23 +25,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.priceLabel.text = "\(Int(sender.value.self)) $"
         return
     }
-
+    
     @IBAction func switchTransmission(_ sender: UISwitch) {
         if (sender.isOn) {
             transmissionLabel.text = "automatic"
         } else {
-             transmissionLabel.text = "manual"
+            transmissionLabel.text = "manual"
         }
     }
     @IBOutlet var transmissionLabel: UILabel!
     
     
-    
-    
     var carsArray : [Car] = []
     var searchCar = [Car]()
     var searching = false
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searching {
@@ -90,13 +86,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         
     }
-    
 }
 extension ViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searching = true
         searchCar = carsArray.filter({$0.make.prefix(searchText.count) == searchText})
-//        searchCar = carsArray.filter({$0.model.prefix(searchText.count) == searchText})
         tableView.reloadData()
     }
 }
