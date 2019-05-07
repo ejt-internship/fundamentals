@@ -15,6 +15,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //    @IBOutlet var search: UISearchBar!
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var yearLabel: UILabel!
+    @IBAction func yearSlider(_ sender: UISlider) {
+        self.yearLabel.text = String(Int(sender.value.self))
+        return
+    }
+    
+    @IBOutlet var priceLabel: UILabel!
+    @IBAction func priceSlider(_ sender: UISlider) {
+        self.priceLabel.text = "\(Int(sender.value.self)) $"
+        return
+    }
+
+    @IBAction func switchTransmission(_ sender: UISwitch) {
+        if (sender.isOn) {
+            transmissionLabel.text = "automatic"
+        } else {
+             transmissionLabel.text = "manual"
+        }
+    }
+    @IBOutlet var transmissionLabel: UILabel!
+    
+    
+    
+    
     var carsArray : [Car] = []
     var searchCar = [Car]()
     var searching = false
@@ -28,7 +52,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TableViewCell
         
         if searching {
             let newValue = searchCar[indexPath.row]
@@ -61,11 +85,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
+    
+    @IBAction func searchButton(_ sender: UIButton) {
+        
+        
+    }
+    
 }
 extension ViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searching = true
         searchCar = carsArray.filter({$0.make.prefix(searchText.count) == searchText})
+//        searchCar = carsArray.filter({$0.model.prefix(searchText.count) == searchText})
         tableView.reloadData()
     }
 }
