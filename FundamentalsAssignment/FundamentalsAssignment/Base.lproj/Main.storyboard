@@ -317,6 +317,7 @@
                     </view>
                     <connections>
                         <outlet property="priceLabel" destination="lJk-5y-rrl" id="J2s-Sh-etf"/>
+                        <outlet property="priceSliderOutlet" destination="Egf-pn-dj3" id="78V-db-bcn"/>
                         <outlet property="searchBar" destination="WNH-AE-37b" id="N52-fg-ZsQ"/>
                         <outlet property="searchDisplayController" destination="2d4-aw-SZ4" id="vJK-Jh-8QX"/>
                         <outlet property="tableView" destination="ESf-ap-lqj" id="JKA-Ri-dNR"/>

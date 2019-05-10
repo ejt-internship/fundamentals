@@ -23,33 +23,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     
+    @IBOutlet var priceSliderOutlet: UISlider!
     @IBOutlet var priceLabel: UILabel!
     @IBAction func priceSlider(_ sender: UISlider) {
-        
+        self.priceLabel.text = "\(Int(priceSliderOutlet.minimumValue))"
         self.priceLabel.text = "\(Int(sender.value.self)) €"
         return
     }
     
     @IBAction func switchTransmission(_ sender: UISwitch) {
-        if (sender.isOn) {
-            
-            transmissionLabel.text = "automatic"
-            let automatic = carsArray.filter {(car) -> Bool in
-                return car.transmission == .automatic
-                
-            }
-            searchByTransmission.append(Car.Transmission.automatic)
-            print(carsArray)
-        } else {
-            transmissionLabel.text = "manual"
-            let manual = carsArray.filter { (car) -> Bool in
-                
-                
-                return car.transmission == .manual
-            }
-        }
-        searchByTransmission.append(Car.Transmission.manual)
-        print(carsArray)
+//        if (sender.isOn) {
+//
+//            transmissionLabel.text = "automatic"
+//            let automatic = carsArray.filter {(car) -> Bool in
+//                return car.transmission == .automatic
+//
+//            }
+//            searchByTransmission.append(Car.Transmission.automatic)
+//            print(carsArray)
+//        } else {
+//            transmissionLabel.text = "manual"
+//            let manual = carsArray.filter { (car) -> Bool in
+//
+//
+//                return car.transmission == .manual
+//            }
+//        }
+//        searchByTransmission.append(Car.Transmission.manual)
+//        print(carsArray)
     }
     
     @IBOutlet var transmissionLabel: UILabel!
@@ -111,14 +112,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 //                print(carValues)
                 self.tableView.reloadData()
                 
-                
                 let carYears = carValues
                     .map { $0.year }
                 
                 let carYearsWithOutDublicates = carYears.removingDuplicates()
                 print(carYearsWithOutDublicates)
-                
-                
                 
                 if let lowestYear = carYearsWithOutDublicates.min() {
                     print(lowestYear)
@@ -129,6 +127,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 if let highestYear = carYearsWithOutDublicates.max() {
                     self.yearSlider.maximumValue = Float(highestYear)
                     
+                }
+                
+                let carPrice = carValues.map{$0.price}
+                let carPriceWithOutDuplicate = carPrice.removingDuplicates()
+                
+                if let lowestPrice = carPriceWithOutDuplicate.min() {
+                    print(lowestPrice)
+                    self.yearSlider.minimumValue = Float(lowestPrice)
+                    self.priceLabel.text = "\(lowestPrice)"
+                }
+                if let highestPrice = carPriceWithOutDuplicate.max() {
+                    self.priceSliderOutlet.maximumValue = Float(highestPrice)
                 }
             }
         }
@@ -183,6 +193,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
         searchCar = results
         tableView.reloadData()
+        
+        
+        
+        
             }
 }
 
@@ -192,7 +206,6 @@ extension ViewController: UISearchBarDelegate {
         searching = true
         searchCar = carsArray.filter({ (car) -> Bool in
             return (car.make.contains(searchText)) || (car.model.contains(searchText))
-            //TODO: replace prefix (jāatrod arī otrā vārda sākums), check not by count
         })
         tableView.reloadData()
     }
