@@ -10,35 +10,65 @@ import UIKit
 import SFundamentals
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var tableView: UITableView!
     
     @IBOutlet var yearLabel: UILabel!
-    @IBAction func yearSlider(_ sender: UISlider) {
-        self.yearLabel.text = String(Int(sender.value.self))
-        return
+    @IBOutlet var yearSlider: UISlider!
+    
+    @IBAction func didChangeYear(_ sender: UISlider) {
+        self.yearLabel.text = "\(Int(yearSlider.minimumValue))"
+        self.yearLabel.text = "\(Int(sender.value.self))"
     }
+    
     
     @IBOutlet var priceLabel: UILabel!
     @IBAction func priceSlider(_ sender: UISlider) {
-        self.priceLabel.text = "\(Int(sender.value.self)) $"
+        
+        self.priceLabel.text = "\(Int(sender.value.self)) €"
         return
     }
     
     @IBAction func switchTransmission(_ sender: UISwitch) {
         if (sender.isOn) {
+            
             transmissionLabel.text = "automatic"
+            let automatic = carsArray.filter {(car) -> Bool in
+                return car.transmission == .automatic
+                
+            }
+            searchByTransmission.append(Car.Transmission.automatic)
+            print(carsArray)
         } else {
             transmissionLabel.text = "manual"
+            let manual = carsArray.filter { (car) -> Bool in
+                
+                
+                return car.transmission == .manual
+            }
         }
+        searchByTransmission.append(Car.Transmission.manual)
+        print(carsArray)
     }
+    
     @IBOutlet var transmissionLabel: UILabel!
     
+    @IBOutlet var bodyCheckboxes: [CheckBox]!
+    
+    var carBodyTypes: [Int: Car.Body] = [0 : .sedan,
+                                         1 : .hatchback,
+                                         2 : .coupe,
+                                         3 : .cabrio,
+                                         4 : .wagon,
+                                         5 : .crossover,
+                                         6 : .minivan]
     
     var carsArray : [Car] = []
     var searchCar = [Car]()
     var searching = false
+    var searchByBody = [Car.Body]()
+    var searchByTransmission = [Car.Transmission]()
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searching {
@@ -61,36 +91,96 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
-    private func setUpSearchBar() {
-        searchBar.delegate = self
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(yearLabel.text!)
         JSON.shared.fetch { (carValues) in
-            Car.self
             DispatchQueue.main.async {
-                let newData = self.carsArray
                 self.carsArray = carValues
-                print(carValues)
+                self.searchCar = carValues
+                //                print(carValues)
                 self.tableView.reloadData()
-                self.tableView.dataSource = self
-                self.setUpSearchBar()
-                self.searchCar = self.carsArray
+                
+                
+                let carYears = carValues
+                    .map { $0.year }
+                
+                let carYearsWithOutDublicates = carYears.removingDuplicates()
+                print(carYearsWithOutDublicates)
+                
+                
+                
+                if let lowestYear = carYearsWithOutDublicates.min() {
+                    print(lowestYear)
+                    self.yearSlider.minimumValue = Float(lowestYear)
+                    self.yearLabel.text = "\(lowestYear)"
+                }
+                
+                if let highestYear = carYearsWithOutDublicates.max() {
+                    self.yearSlider.maximumValue = Float(highestYear)
+                    
+                }
             }
         }
     }
     
+    
     @IBAction func searchButton(_ sender: UIButton) {
+        searching = true
+        let ongoingCars = searching ? searchCar : carsArray
         
         
+        var results = Cars()
+        
+        if !bodyCheckboxes.isEmpty {
+            for checkbox in bodyCheckboxes {
+                if checkbox.isChecked {
+                    let filteredByBody = ongoingCars.filter({ (car) -> Bool in
+                        return car.body == carBodyTypes[checkbox.tag]
+                       
+                    })
+                    
+                    results.append(contentsOf: filteredByBody)
+                    print(filteredByBody)
+                    searchCar = filteredByBody
+                    tableView.reloadData()
+
+                }
+            }
+        } else {
+            results = ongoingCars
+            print("else")
+//            searching = false
+        }
+        searchCar = results
+        tableView.reloadData()
+//        searching = false
     }
 }
+
 extension ViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searching = true
-        searchCar = carsArray.filter({$0.make.prefix(searchText.count) == searchText})
+        searchCar = carsArray.filter({ (car) -> Bool in
+            return (car.make.contains(searchText)) || (car.model.contains(searchText))
+            //TODO: replace prefix (jāatrod arī otrā vārda sākums), check not by count
+        })
         tableView.reloadData()
     }
 }
+
+extension Array where Element: Hashable {
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+        
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+    
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
+    }
+}
+
+

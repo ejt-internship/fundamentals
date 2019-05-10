@@ -8,13 +8,16 @@
 
 import UIKit
 
+@IBDesignable
 class CheckBox: UIButton {
     
+//    var vc = ViewController()
     let checkedImage = UIImage(named: "checked_checkbox")
     let unCheckedImage = UIImage(named: "unchecked_checkbox")
     
-    @IBInspectable var isChecked:Bool = false{
-        didSet{
+    @IBInspectable
+    var isChecked: Bool = false {
+        didSet {
             self.updateImage()
         }
     }
@@ -25,16 +28,19 @@ class CheckBox: UIButton {
     }
     
     func updateImage() {
-        if isChecked == true{
+        if isChecked == true {
             self.setImage(checkedImage, for: [])
-        }else{
+        } else {
             self.setImage(unCheckedImage, for: [])
         }
     }
     
     @objc func buttonClicked(sender:UIButton) {
-        if(sender == self){
+        if(sender == self) {
             isChecked = !isChecked
+//            ViewController().searchByBody.append()
+            print("clicked button tag: \(sender.tag),  \(sender.titleLabel?.text)")
+
         }
     }
 }
