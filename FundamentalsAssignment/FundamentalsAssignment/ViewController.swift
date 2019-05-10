@@ -64,6 +64,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                          5 : .crossover,
                                          6 : .minivan]
     
+    
+    @IBOutlet var fuelTypeCheckBoxes: [CheckBox]!
+    
+    var carFuelTypes: [Int: Car.FuelType] = [10 : .gasoline,
+                                            11 : .diesel,
+                                            12 : .electric,
+                                            13 : .hydrogen,
+                                            14 : .solar,
+                                            15 : .vegetableOil]
+    
     var carsArray : [Car] = []
     var searchCar = [Car]()
     var searching = false
@@ -142,21 +152,40 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     
                     results.append(contentsOf: filteredByBody)
                     print(filteredByBody)
-                    searchCar = filteredByBody
+                    results = filteredByBody
                     tableView.reloadData()
 
                 }
             }
         } else {
             results = ongoingCars
-            print("else")
-//            searching = false
         }
         searchCar = results
         tableView.reloadData()
-//        searching = false
-    }
+        
+        
+        if !fuelTypeCheckBoxes.isEmpty {
+            for checkBox in fuelTypeCheckBoxes {
+                if checkBox.isChecked {
+                    let filteredByFuelType = ongoingCars.filter({ (car) -> Bool in
+                        return car.fuelType == carFuelTypes[checkBox.tag]
+                    })
+                    
+                    results.append(contentsOf: filteredByFuelType)
+                    print(filteredByFuelType)
+                    searchCar = filteredByFuelType
+                    tableView.reloadData()
+                    
+                }
+            }
+        } else {
+            results = ongoingCars
+                }
+        searchCar = results
+        tableView.reloadData()
+            }
 }
+
 
 extension ViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

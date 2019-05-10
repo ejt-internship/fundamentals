@@ -330,6 +330,12 @@
                         <outletCollection property="bodyCheckboxes" destination="tzB-V9-ToR" collectionClass="NSMutableArray" id="3dI-Zk-Xh4"/>
                         <outletCollection property="bodyCheckboxes" destination="Wiy-H7-Fed" collectionClass="NSMutableArray" id="EsU-Bf-w7W"/>
                         <outletCollection property="bodyCheckboxes" destination="eS9-qk-ejZ" collectionClass="NSMutableArray" id="qcd-Y7-7eX"/>
+                        <outletCollection property="fuelTypeCheckBoxes" destination="V42-1W-bNT" collectionClass="NSMutableArray" id="IWS-XK-VC7"/>
+                        <outletCollection property="fuelTypeCheckBoxes" destination="JrA-Jr-37s" collectionClass="NSMutableArray" id="Ha7-at-45L"/>
+                        <outletCollection property="fuelTypeCheckBoxes" destination="oLE-mG-80c" collectionClass="NSMutableArray" id="Ltu-gj-Vs9"/>
+                        <outletCollection property="fuelTypeCheckBoxes" destination="BlY-ed-H78" collectionClass="NSMutableArray" id="bHL-qX-9GS"/>
+                        <outletCollection property="fuelTypeCheckBoxes" destination="JY7-6g-4La" collectionClass="NSMutableArray" id="QU8-ia-12R"/>
+                        <outletCollection property="fuelTypeCheckBoxes" destination="z4s-Gc-GUf" collectionClass="NSMutableArray" id="co1-sP-y7g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
