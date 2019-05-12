@@ -32,23 +32,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     @IBAction func switchTransmission(_ sender: UISwitch) {
-//        if (sender.isOn) {
-//
-//            transmissionLabel.text = "automatic"
+        if (sender.isOn) {
+
+            transmissionLabel.text = "automatic"
 //            let automatic = carsArray.filter {(car) -> Bool in
 //                return car.transmission == .automatic
 //
-//            }
+            
 //            searchByTransmission.append(Car.Transmission.automatic)
 //            print(carsArray)
-//        } else {
-//            transmissionLabel.text = "manual"
+        } else {
+            transmissionLabel.text = "manual"
 //            let manual = carsArray.filter { (car) -> Bool in
 //
 //
 //                return car.transmission == .manual
-//            }
-//        }
+            }
 //        searchByTransmission.append(Car.Transmission.manual)
 //        print(carsArray)
     }
@@ -122,10 +121,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     print(lowestYear)
                     self.yearSlider.minimumValue = Float(lowestYear)
                     self.yearLabel.text = "\(lowestYear)"
+                    print("minYear is: \(lowestYear)")
                 }
                 
                 if let highestYear = carYearsWithOutDublicates.max() {
                     self.yearSlider.maximumValue = Float(highestYear)
+//                    self.yearLabel.text = "\(highestYear)"
+                    print ("maxYear is:  \(highestYear)")
                     
                 }
                 
@@ -133,12 +135,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let carPriceWithOutDuplicate = carPrice.removingDuplicates()
                 
                 if let lowestPrice = carPriceWithOutDuplicate.min() {
-                    print(lowestPrice)
-                    self.yearSlider.minimumValue = Float(lowestPrice)
+                    print ("minPrice is:  \(lowestPrice)")
+                    self.priceSliderOutlet.minimumValue = Float(lowestPrice)
                     self.priceLabel.text = "\(lowestPrice)"
                 }
                 if let highestPrice = carPriceWithOutDuplicate.max() {
                     self.priceSliderOutlet.maximumValue = Float(highestPrice)
+//                    self.priceLabel.text = "\(highestPrice)"
+                    print("maxPrice is:  \(highestPrice)")
                 }
             }
         }
@@ -194,10 +198,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         searchCar = results
         tableView.reloadData()
         
-        
-        
-        
-            }
+        if transmissionLabel.text == "automatic" {
+            let filteredByTransmission = ongoingCars.filter({ (car) -> Bool in
+                return car.transmission == .automatic
+        })
+            results.append(contentsOf: filteredByTransmission)
+            print(filteredByTransmission)
+            searchCar = filteredByTransmission
+            tableView.reloadData()
+        } else {
+            let filteredByTransmission = ongoingCars.filter({ (car) -> Bool in
+                return car.transmission == .manual
+            })
+            results.append(contentsOf: filteredByTransmission)
+            print(filteredByTransmission)
+            searchCar = filteredByTransmission
+            tableView.reloadData()
+        }
+    }
 }
 
 
