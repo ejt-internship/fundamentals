@@ -10,7 +10,7 @@ import UIKit
 import SFundamentals
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var tableView: UITableView!
     
@@ -33,23 +33,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func switchTransmission(_ sender: UISwitch) {
         if (sender.isOn) {
-
             transmissionLabel.text = "automatic"
-//            let automatic = carsArray.filter {(car) -> Bool in
-//                return car.transmission == .automatic
-//
-            
-//            searchByTransmission.append(Car.Transmission.automatic)
-//            print(carsArray)
         } else {
             transmissionLabel.text = "manual"
-//            let manual = carsArray.filter { (car) -> Bool in
-//
-//
-//                return car.transmission == .manual
-            }
-//        searchByTransmission.append(Car.Transmission.manual)
-//        print(carsArray)
+        }
     }
     
     @IBOutlet var transmissionLabel: UILabel!
@@ -68,11 +55,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var fuelTypeCheckBoxes: [CheckBox]!
     
     var carFuelTypes: [Int: Car.FuelType] = [10 : .gasoline,
-                                            11 : .diesel,
-                                            12 : .electric,
-                                            13 : .hydrogen,
-                                            14 : .solar,
-                                            15 : .vegetableOil]
+                                             11 : .diesel,
+                                             12 : .electric,
+                                             13 : .hydrogen,
+                                             14 : .solar,
+                                             15 : .vegetableOil]
     
     var carsArray : [Car] = []
     var searchCar = [Car]()
@@ -126,7 +113,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 if let highestYear = carYearsWithOutDublicates.max() {
                     self.yearSlider.maximumValue = Float(highestYear)
-//                    self.yearLabel.text = "\(highestYear)"
                     print ("maxYear is:  \(highestYear)")
                     
                 }
@@ -137,11 +123,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 if let lowestPrice = carPriceWithOutDuplicate.min() {
                     print ("minPrice is:  \(lowestPrice)")
                     self.priceSliderOutlet.minimumValue = Float(lowestPrice)
-                    self.priceLabel.text = "\(lowestPrice)"
+                    self.priceLabel.text = "\(lowestPrice) €"
                 }
                 if let highestPrice = carPriceWithOutDuplicate.max() {
                     self.priceSliderOutlet.maximumValue = Float(highestPrice)
-//                    self.priceLabel.text = "\(highestPrice)"
                     print("maxPrice is:  \(highestPrice)")
                 }
             }
@@ -155,68 +140,83 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         
         var results = Cars()
+        var results2 = results
+        var results3 = results2
+        var results4 = results3
         
         if !bodyCheckboxes.isEmpty {
             for checkbox in bodyCheckboxes {
                 if checkbox.isChecked {
                     let filteredByBody = ongoingCars.filter({ (car) -> Bool in
                         return car.body == carBodyTypes[checkbox.tag]
-                       
+                        
                     })
                     
                     results.append(contentsOf: filteredByBody)
                     print(filteredByBody)
                     results = filteredByBody
-                    tableView.reloadData()
-
+                    
                 }
             }
         } else {
             results = ongoingCars
         }
-        searchCar = results
-        tableView.reloadData()
+        
         
         
         if !fuelTypeCheckBoxes.isEmpty {
             for checkBox in fuelTypeCheckBoxes {
                 if checkBox.isChecked {
-                    let filteredByFuelType = ongoingCars.filter({ (car) -> Bool in
+                    let filteredByFuelType = results.filter({ (car) -> Bool in
                         return car.fuelType == carFuelTypes[checkBox.tag]
                     })
                     
-                    results.append(contentsOf: filteredByFuelType)
+                    results2.append(contentsOf: filteredByFuelType)
                     print(filteredByFuelType)
-                    searchCar = filteredByFuelType
-                    tableView.reloadData()
                     
                 }
             }
         } else {
-            results = ongoingCars
-                }
-        searchCar = results
-        tableView.reloadData()
+            results2 = ongoingCars
+        }
         
         if transmissionLabel.text == "automatic" {
-            let filteredByTransmission = ongoingCars.filter({ (car) -> Bool in
+            let filteredByTransmission = results2.filter({ (car) -> Bool in
                 return car.transmission == .automatic
-        })
-            results.append(contentsOf: filteredByTransmission)
+            })
+            
+            results3.append(contentsOf: filteredByTransmission)
             print(filteredByTransmission)
-            searchCar = filteredByTransmission
-            tableView.reloadData()
+            
         } else {
-            let filteredByTransmission = ongoingCars.filter({ (car) -> Bool in
+            let filteredByTransmission = results2.filter({ (car) -> Bool in
                 return car.transmission == .manual
             })
-            results.append(contentsOf: filteredByTransmission)
+            
+            results3.append(contentsOf: filteredByTransmission)
             print(filteredByTransmission)
-            searchCar = filteredByTransmission
-            tableView.reloadData()
+            
         }
+
+//        let yearSliderValue = yearLabel.text!
+//        print("this is current year label text: \(yearSliderValue)")
+//        let yearSliderFilter = Int(yearSliderValue)!
+////        if yearSliderFilter...Int(Float(yearSlider.maximumValue)) ~= ongoingCars {
+//            let filteredByYear = ongoingCars.filter({ (car) -> Bool in
+//                return car.year == car.year
+//            })
+//            //TODO: safe-unwrap, uztaisˆt kopu, no izv´l´ta lidz maksimalas, parbaudit vai mashinas gads pieder kopai
+//            results.append(contentsOf: filteredByYear)
+//            print("yearFilter result is: \(filteredByYear)")
+//        }
+        print(results3.count)
+        print(results2.count)
+        print(results.count)
+        searchCar = results3
+        tableView.reloadData()
     }
 }
+
 
 
 extension ViewController: UISearchBarDelegate {
