@@ -143,6 +143,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var results2 = results
         var results3 = results2
         var results4 = results3
+        var results5 = results4
         
         if !bodyCheckboxes.isEmpty {
             for checkbox in bodyCheckboxes {
@@ -198,17 +199,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
         }
 
-//        let yearSliderValue = yearLabel.text!
-//        print("this is current year label text: \(yearSliderValue)")
-//        let yearSliderFilter = Int(yearSliderValue)!
-////        if yearSliderFilter...Int(Float(yearSlider.maximumValue)) ~= ongoingCars {
-//            let filteredByYear = ongoingCars.filter({ (car) -> Bool in
-//                return car.year == car.year
-//            })
-//            //TODO: safe-unwrap, uztaisˆt kopu, no izv´l´ta lidz maksimalas, parbaudit vai mashinas gads pieder kopai
-//            results.append(contentsOf: filteredByYear)
-//            print("yearFilter result is: \(filteredByYear)")
+//        if let yearSliderValue = yearLabel.text {
+//            print("this is current year label text: \(yearSliderValue)")
+//            if let yearSliderFilter = Int(yearSliderValue) {
+//                let carYearFilteredElements = yearSliderFilter...Int(Float(yearSlider.maximumValue))
+//                if ongoingCars ~= carYearFilteredElements {
+//                    let filteredByYear = results3.filter({ (car) -> Bool in
+//                        return car.year == car.year
+//                    })
+//                    //            //TODO: safe-unwrap, uztaisˆt kopu, no izv´l´ta lidz maksimalas, parbaudit vai mashinas gads pieder kopai
+//                    //            results.append(contentsOf: filteredByYear)
+//                    //            print("yearFilter result is: \(filteredByYear)")
+//                    results4.append(contentsOf: filteredByYear)
+//                }
+//            }
+//            
+//            
+//            
+//    }
+//        if let priceSliderValue = priceLabel.text {
+//            print("this is current price label text: \(priceSliderValue)")
+//            if let priceSliderFilter = Int(priceSliderValue) {
+//                let carPriceFilteredElements = priceSliderFilter...Int(Float(priceSliderOutlet.maximumValue))
+//                if carsArray.capacity ~= carPriceFilteredElements {
+//                    let filteredByPrice = results3.filter({ (car) -> Bool in
+//                        return car.year == car.year
+//                    })
+//                    results5.append(contentsOf: filteredByPrice)
+//}
+//}
+//            
+//            
 //        }
+        
         print(results3.count)
         print(results2.count)
         print(results.count)
@@ -216,8 +239,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.reloadData()
     }
 }
-
-
 
 extension ViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
