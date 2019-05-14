@@ -68,9 +68,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var carsArray : [Car] = []
     var searchCar = [Car]()
-    var searching = false
     var searchByBody = [Car.Body]()
     var searchByTransmission = [Car.Transmission]()
+    var searching = false
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searching {
@@ -99,10 +99,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // katram checkboksam uzsetot sevi ka delegatu, kas izsaucas no checkbox
         // buttonClicked(sender:)
         // uzlikt checkBoxiem ratio 1:1
+        
         for checkBox in bodyCheckboxes {
             checkBox.delegate = self
         }
-        
+
         for checkBox in fuelTypeCheckBoxes {
             checkBox.delegate = self
         }
@@ -157,6 +158,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     @IBAction func searchButton(_ sender: UIButton) {
+        
         let ongoingCars = searching ? searchCar : carsArray
         
         var results = Cars()
@@ -197,11 +199,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let results3 = filteredByTransmission
         var results4 = Cars()
+        searching = true
         let carPossibleYearRange = Int(yearSlider.value)...Int(yearSlider.maximumValue)
-        
+       
         results4 = results3.filter({ (car) -> Bool in
+             print(car.year)
             return carPossibleYearRange ~= car.year
+            
         })
+        print(carPossibleYearRange)
+        
         
         if results4.isEmpty {
             results4 = results3
@@ -220,10 +227,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         print(results2.count)
         print(results3.count)
         print(results4.count)
+        print(results4)
         
         searchCar = results4
         tableView.reloadData()
-        searching = false
+//        searching = false
         
     }
 }

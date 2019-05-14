@@ -9,6 +9,7 @@
 import UIKit
 
 //@IBDesignable
+
 protocol UIButtonDelegate: AnyObject {
     func checkButtons()
 }
