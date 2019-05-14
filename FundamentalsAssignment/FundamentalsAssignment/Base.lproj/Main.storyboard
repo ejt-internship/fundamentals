@@ -312,6 +312,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="minivan"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uqj-jn-q8F">
+                                <rect key="frame" x="221" y="396" width="39" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Reset"/>
+                                <connections>
+                                    <action selector="resetButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nT2-Zv-QEV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -355,6 +363,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="gearSwitch" destination="M65-bI-Th0" id="tiC-Cp-1RC"/>
                         <outlet property="priceLabel" destination="lJk-5y-rrl" id="J2s-Sh-etf"/>
                         <outlet property="priceSliderOutlet" destination="Egf-pn-dj3" id="78V-db-bcn"/>
                         <outlet property="searchBar" destination="WNH-AE-37b" id="N52-fg-ZsQ"/>

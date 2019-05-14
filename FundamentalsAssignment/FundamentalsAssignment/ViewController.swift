@@ -18,6 +18,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var yearSlider: UISlider!
     
     @IBAction func didChangeYear(_ sender: UISlider) {
+        searching = true
         self.yearLabel.text = "\(Int(yearSlider.minimumValue))"
         self.yearLabel.text = "\(Int(sender.value.self))"
     }
@@ -26,18 +27,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet var priceSliderOutlet: UISlider!
     @IBOutlet var priceLabel: UILabel!
     @IBAction func priceSlider(_ sender: UISlider) {
+        searching = true
         self.priceLabel.text = "\(Int(priceSliderOutlet.minimumValue))"
         self.priceLabel.text = "\(Int(sender.value.self)) €"
         return
     }
     
     @IBAction func switchTransmission(_ sender: UISwitch) {
+        searching = true
         if (sender.isOn) {
             transmissionLabel.text = "automatic"
         } else {
             transmissionLabel.text = "manual"
         }
     }
+    
+    @IBOutlet private var gearSwitch: UISwitch!
     
     @IBOutlet var transmissionLabel: UILabel!
     
@@ -90,7 +95,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(yearLabel.text!)
+        
+        // katram checkboksam uzsetot sevi ka delegatu, kas izsaucas no checkbox
+        // buttonClicked(sender:)
+        // uzlikt checkBoxiem ratio 1:1
+        for checkBox in bodyCheckboxes {
+            checkBox.delegate = self
+        }
+        
+        for checkBox in fuelTypeCheckBoxes {
+            checkBox.delegate = self
+        }
+        
         JSON.shared.fetch { (carValues) in
             DispatchQueue.main.async {
                 self.carsArray = carValues
@@ -100,6 +116,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 let carYears = carValues
                     .map { $0.year }
+                print(carYears)
                 
                 let carYearsWithOutDublicates = carYears.removingDuplicates()
                 print(carYearsWithOutDublicates)
@@ -133,110 +150,81 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    @IBAction func resetButton(_ sender: UIButton) {
+        searching = false
+        searchCar.removeAll()
+        tableView.reloadData()
+    }
     
     @IBAction func searchButton(_ sender: UIButton) {
-        searching = true
         let ongoingCars = searching ? searchCar : carsArray
         
-        
         var results = Cars()
-        var results2 = results
-        var results3 = results2
-        var results4 = results3
-        var results5 = results4
         
-        if !bodyCheckboxes.isEmpty {
-            for checkbox in bodyCheckboxes {
-                if checkbox.isChecked {
-                    let filteredByBody = ongoingCars.filter({ (car) -> Bool in
-                        return car.body == carBodyTypes[checkbox.tag]
-                        
-                    })
-                    
-                    results.append(contentsOf: filteredByBody)
-                    print(filteredByBody)
-                    results = filteredByBody
-                    
-                }
+        for checkbox in bodyCheckboxes {
+            if checkbox.isChecked {
+                let filteredByBody = ongoingCars.filter({ (car) -> Bool in
+                    return car.body == carBodyTypes[checkbox.tag]
+                })
+                
+                results.append(contentsOf: filteredByBody)
             }
-        } else {
+        }
+        
+        if results.isEmpty {
             results = ongoingCars
         }
         
+        var results2 = Cars()
         
-        
-        if !fuelTypeCheckBoxes.isEmpty {
-            for checkBox in fuelTypeCheckBoxes {
-                if checkBox.isChecked {
-                    let filteredByFuelType = results.filter({ (car) -> Bool in
-                        return car.fuelType == carFuelTypes[checkBox.tag]
-                    })
-                    
-                    results2.append(contentsOf: filteredByFuelType)
-                    print(filteredByFuelType)
-                    
-                }
+        for checkBox in fuelTypeCheckBoxes {
+            if checkBox.isChecked {
+                let filteredByFuelType = results.filter({ (car) -> Bool in
+                    return car.fuelType == carFuelTypes[checkBox.tag]
+                })
+                
+                results2.append(contentsOf: filteredByFuelType)
             }
-        } else {
-            results2 = ongoingCars
         }
         
-        if transmissionLabel.text == "automatic" {
-            let filteredByTransmission = results2.filter({ (car) -> Bool in
-                return car.transmission == .automatic
-            })
-            
-            results3.append(contentsOf: filteredByTransmission)
-            print(filteredByTransmission)
-            
-        } else {
-            let filteredByTransmission = results2.filter({ (car) -> Bool in
-                return car.transmission == .manual
-            })
-            
-            results3.append(contentsOf: filteredByTransmission)
-            print(filteredByTransmission)
-            
+        if results2.isEmpty {
+            results2 = results
         }
+        
+        let filteredByTransmission = results2.filter({ (car) -> Bool in
+            return car.transmission == (gearSwitch.isOn ? .automatic : .manual)
+        })
+        
+        let results3 = filteredByTransmission
+        var results4 = Cars()
+        let carPossibleYearRange = Int(yearSlider.value)...Int(yearSlider.maximumValue)
+        
+        results4 = results3.filter({ (car) -> Bool in
+            return carPossibleYearRange ~= car.year
+        })
+        
+        if results4.isEmpty {
+            results4 = results3
+        }
+        //        if let priceSliderValue = priceLabel.text {
+        //            print("this is current price label text: \(priceSliderValue)")
+        //            if let priceSliderFilter = Int(priceSliderValue) {
+        //                let carPriceFilteredElements = priceSliderFilter...Int(Float(priceSliderOutlet.maximumValue))
+        //                if carsArray.capacity ~= carPriceFilteredElements {
+        //                    let filteredByPrice = results3.filter({ (car) -> Bool in
+        //                        return car.year == car.year
+        //                    })
+        //                    results5.append(contentsOf: filteredByPrice)
 
-//        if let yearSliderValue = yearLabel.text {
-//            print("this is current year label text: \(yearSliderValue)")
-//            if let yearSliderFilter = Int(yearSliderValue) {
-//                let carYearFilteredElements = yearSliderFilter...Int(Float(yearSlider.maximumValue))
-//                if ongoingCars ~= carYearFilteredElements {
-//                    let filteredByYear = results3.filter({ (car) -> Bool in
-//                        return car.year == car.year
-//                    })
-//                    //            //TODO: safe-unwrap, uztaisˆt kopu, no izv´l´ta lidz maksimalas, parbaudit vai mashinas gads pieder kopai
-//                    //            results.append(contentsOf: filteredByYear)
-//                    //            print("yearFilter result is: \(filteredByYear)")
-//                    results4.append(contentsOf: filteredByYear)
-//                }
-//            }
-//            
-//            
-//            
-//    }
-//        if let priceSliderValue = priceLabel.text {
-//            print("this is current price label text: \(priceSliderValue)")
-//            if let priceSliderFilter = Int(priceSliderValue) {
-//                let carPriceFilteredElements = priceSliderFilter...Int(Float(priceSliderOutlet.maximumValue))
-//                if carsArray.capacity ~= carPriceFilteredElements {
-//                    let filteredByPrice = results3.filter({ (car) -> Bool in
-//                        return car.year == car.year
-//                    })
-//                    results5.append(contentsOf: filteredByPrice)
-//}
-//}
-//            
-//            
-//        }
-        
-        print(results3.count)
-        print(results2.count)
         print(results.count)
-        searchCar = results3
+        print(results2.count)
+        print(results3.count)
+        print(results4.count)
+        
+        searchCar = results4
         tableView.reloadData()
+        searching = false
+        
     }
 }
 
@@ -263,5 +251,23 @@ extension Array where Element: Hashable {
         self = self.removingDuplicates()
     }
 }
+
+extension ViewController: UIButtonDelegate {
+    func checkButtons() {
+        searching = true
+        print("tap")
+    }
+}
+
+//extension UIImage {
+//    class func scaleImageToSize(img: UIImage, size: CGSize) -> UIImage {
+//        UIGraphicsBeginImageContext(size)
+//        img.draw(in: CGRect(origin: CGPointZero, size: size))
+//        if let scaledImage = UIGraphicsGetImageFromCurrentImageContext() {
+//        UIGraphicsEndImageContext()
+//        return scaledImage
+//        }
+//    }
+//}
 
 
