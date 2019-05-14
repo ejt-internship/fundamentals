@@ -96,14 +96,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // katram checkboksam uzsetot sevi ka delegatu, kas izsaucas no checkbox
-        // buttonClicked(sender:)
-        // uzlikt checkBoxiem ratio 1:1
-        
         for checkBox in bodyCheckboxes {
             checkBox.delegate = self
         }
-
+        
         for checkBox in fuelTypeCheckBoxes {
             checkBox.delegate = self
         }
@@ -201,38 +197,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var results4 = Cars()
         searching = true
         let carPossibleYearRange = Int(yearSlider.value)...Int(yearSlider.maximumValue)
-       
+        
         results4 = results3.filter({ (car) -> Bool in
-             print(car.year)
             return carPossibleYearRange ~= car.year
             
         })
-        print(carPossibleYearRange)
         
+        var results5 = Cars()
+        let possiblePriceRange = Int(priceSliderOutlet.value)...Int(priceSliderOutlet.maximumValue)
         
-        if results4.isEmpty {
-            results4 = results3
-        }
-        //        if let priceSliderValue = priceLabel.text {
-        //            print("this is current price label text: \(priceSliderValue)")
-        //            if let priceSliderFilter = Int(priceSliderValue) {
-        //                let carPriceFilteredElements = priceSliderFilter...Int(Float(priceSliderOutlet.maximumValue))
-        //                if carsArray.capacity ~= carPriceFilteredElements {
-        //                    let filteredByPrice = results3.filter({ (car) -> Bool in
-        //                        return car.year == car.year
-        //                    })
-        //                    results5.append(contentsOf: filteredByPrice)
-
-        print(results.count)
-        print(results2.count)
-        print(results3.count)
-        print(results4.count)
-        print(results4)
+        results5 = results4.filter({ (car) -> Bool in
+            return possiblePriceRange ~= car.price
+        })
         
-        searchCar = results4
+        searchCar = results5
         tableView.reloadData()
-//        searching = false
-        
     }
 }
 
@@ -263,19 +242,5 @@ extension Array where Element: Hashable {
 extension ViewController: UIButtonDelegate {
     func checkButtons() {
         searching = true
-        print("tap")
     }
 }
-
-//extension UIImage {
-//    class func scaleImageToSize(img: UIImage, size: CGSize) -> UIImage {
-//        UIGraphicsBeginImageContext(size)
-//        img.draw(in: CGRect(origin: CGPointZero, size: size))
-//        if let scaledImage = UIGraphicsGetImageFromCurrentImageContext() {
-//        UIGraphicsEndImageContext()
-//        return scaledImage
-//        }
-//    }
-//}
-
-

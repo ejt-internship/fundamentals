@@ -8,28 +8,16 @@
 
 import UIKit
 
-//@IBDesignable
 
 protocol UIButtonDelegate: AnyObject {
     func checkButtons()
 }
 class CheckBox: UIButton {
     
-//    func scaleImageToSize(img: UIImage, size: CGSize) -> UIImage {
-//        UIGraphicsBeginImageContext(size)
-//        img.draw(in: CGRect(origin: CGPointZero, size: size))
-//        if let scaledImage = UIGraphicsGetImageFromCurrentImageContext() {
-//        UIGraphicsEndImageContext()
-//        return scaledImage
-//        }
-//    }
-
-//    var vc = ViewController()
     let checkedImage = UIImage(named: "checked_checkbox")
     let unCheckedImage = UIImage(named: "unchecked_checkbox")
     
     weak var delegate : UIButtonDelegate?
-//    @IBInspectable
     var isChecked: Bool = false {
         didSet {
             self.updateImage()
@@ -53,9 +41,6 @@ class CheckBox: UIButton {
         if(sender == self) {
             isChecked = !isChecked
             delegate?.checkButtons()
-//            ViewController().searchByBody.append()
-            print("clicked button tag: \(sender.tag),  \(sender.titleLabel?.text)")
-
         }
     }
 }
