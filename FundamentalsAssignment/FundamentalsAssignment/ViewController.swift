@@ -42,7 +42,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    @IBOutlet private var gearSwitch: UISwitch!
+    @IBOutlet var gearSwitch: UISwitch!
     
     @IBOutlet var transmissionLabel: UILabel!
     
