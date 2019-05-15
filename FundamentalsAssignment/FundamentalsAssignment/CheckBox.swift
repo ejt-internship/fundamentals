@@ -4,19 +4,17 @@
 //
 //  Created by egmars.janis.timma on 07/05/2019.
 //  Copyright © 2019 egmars.janis.timma. All rights reserved.
-//
 
 import UIKit
-
 
 protocol UIButtonDelegate: AnyObject {
     func checkButtons()
 }
+
 class CheckBox: UIButton {
     
     let checkedImage = UIImage(named: "checked_checkbox")
     let unCheckedImage = UIImage(named: "unchecked_checkbox")
-    
     weak var delegate : UIButtonDelegate?
     var isChecked: Bool = false {
         didSet {
@@ -38,7 +36,7 @@ class CheckBox: UIButton {
     }
     
     @objc func buttonClicked(sender: UIButton) {
-        if(sender == self) {
+        if (sender == self) {
             isChecked = !isChecked
             delegate?.checkButtons()
         }

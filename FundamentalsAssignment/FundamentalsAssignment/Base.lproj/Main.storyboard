@@ -163,9 +163,9 @@
                             <button opaque="NO" contentMode="center" placeholderIntrinsicWidth="44" placeholderIntrinsicHeight="28" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCF-yG-WVa" customClass="CheckBox" customModule="FundamentalsAssignment" customModuleProvider="target">
                                 <rect key="frame" x="15" y="126" width="20" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="EWX-0R-OSW"/>
                                     <constraint firstAttribute="height" constant="20" id="U53-vf-Duf"/>
                                     <constraint firstAttribute="width" secondItem="dCF-yG-WVa" secondAttribute="height" multiplier="1:1" id="ps3-5z-4HV"/>
+                                    <constraint firstAttribute="width" secondItem="dCF-yG-WVa" secondAttribute="height" multiplier="1:1" id="rYX-fC-nRW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="sedan"/>
@@ -173,7 +173,8 @@
                             <button opaque="NO" tag="1" contentMode="center" placeholderIntrinsicWidth="71" placeholderIntrinsicHeight="28" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZOY-Z2-eU9" customClass="CheckBox" customModule="FundamentalsAssignment" customModuleProvider="target">
                                 <rect key="frame" x="60" y="126" width="20" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="B1C-L2-RN2"/>
+                                    <constraint firstAttribute="width" secondItem="ZOY-Z2-eU9" secondAttribute="height" multiplier="1:1" id="UGN-AV-piU"/>
+                                    <constraint firstAttribute="width" secondItem="ZOY-Z2-eU9" secondAttribute="height" multiplier="1:1" id="flP-Cy-P3D"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="hatchback"/>
@@ -228,7 +229,7 @@
                             <button opaque="NO" tag="11" contentMode="scaleToFill" placeholderIntrinsicWidth="43" placeholderIntrinsicHeight="28" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JrA-Jr-37s" customClass="CheckBox" customModule="FundamentalsAssignment" customModuleProvider="target">
                                 <rect key="frame" x="60" y="193" width="20" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="keR-em-MEc"/>
+                                    <constraint firstAttribute="width" secondItem="JrA-Jr-37s" secondAttribute="height" multiplier="1:1" id="asU-gh-KWJ"/>
                                     <constraint firstAttribute="width" secondItem="JrA-Jr-37s" secondAttribute="height" multiplier="1:1" id="ocQ-wX-6B0"/>
                                     <constraint firstAttribute="height" constant="20" id="tgY-rn-2y4"/>
                                 </constraints>
@@ -240,7 +241,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="DLU-PO-FpR"/>
                                     <constraint firstAttribute="width" secondItem="oLE-mG-80c" secondAttribute="height" multiplier="1:1" id="ON8-Ia-79r"/>
-                                    <constraint firstAttribute="width" constant="20" id="g0l-de-p1S"/>
+                                    <constraint firstAttribute="width" secondItem="oLE-mG-80c" secondAttribute="height" multiplier="1:1" id="sat-Ig-J25"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="electric"/>
@@ -248,7 +249,8 @@
                             <button opaque="NO" tag="13" contentMode="scaleToFill" placeholderIntrinsicWidth="65" placeholderIntrinsicHeight="28" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BlY-ed-H78" customClass="CheckBox" customModule="FundamentalsAssignment" customModuleProvider="target">
                                 <rect key="frame" x="150" y="193" width="20" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="BRa-aO-JRy"/>
+                                    <constraint firstAttribute="height" constant="20" id="TgA-hR-yeS"/>
+                                    <constraint firstAttribute="width" secondItem="BlY-ed-H78" secondAttribute="height" multiplier="1:1" id="kj8-vd-iS1"/>
                                     <constraint firstAttribute="width" secondItem="BlY-ed-H78" secondAttribute="height" multiplier="1:1" id="qqB-aQ-RAk"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>

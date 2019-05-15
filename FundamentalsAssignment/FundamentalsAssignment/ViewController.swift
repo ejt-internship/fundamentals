@@ -23,7 +23,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.yearLabel.text = "\(Int(sender.value.self))"
     }
     
-    
     @IBOutlet var priceSliderOutlet: UISlider!
     @IBOutlet var priceLabel: UILabel!
     @IBAction func priceSlider(_ sender: UISlider) {
@@ -68,8 +67,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var carsArray : [Car] = []
     var searchCar = [Car]()
-    var searchByBody = [Car.Body]()
-    var searchByTransmission = [Car.Transmission]()
     var searching = false
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -85,7 +82,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if searching {
             let newValue = searchCar[indexPath.row]
             cell.configureCell(car: newValue)
-            
         } else {
             let newValue = carsArray[indexPath.row]
             cell.configureCell(car: newValue)
@@ -108,40 +104,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             DispatchQueue.main.async {
                 self.carsArray = carValues
                 self.searchCar = carValues
-                //                print(carValues)
                 self.tableView.reloadData()
+                let carYears = carValues.map { $0.year }
                 
-                let carYears = carValues
-                    .map { $0.year }
-                print(carYears)
-                
-                let carYearsWithOutDublicates = carYears.removingDuplicates()
-                print(carYearsWithOutDublicates)
-                
-                if let lowestYear = carYearsWithOutDublicates.min() {
-                    print(lowestYear)
+                if let lowestYear = carYears.min() {
                     self.yearSlider.minimumValue = Float(lowestYear)
                     self.yearLabel.text = "\(lowestYear)"
-                    print("minYear is: \(lowestYear)")
                 }
                 
-                if let highestYear = carYearsWithOutDublicates.max() {
+                if let highestYear = carYears.max() {
                     self.yearSlider.maximumValue = Float(highestYear)
-                    print ("maxYear is:  \(highestYear)")
-                    
                 }
                 
                 let carPrice = carValues.map{$0.price}
-                let carPriceWithOutDuplicate = carPrice.removingDuplicates()
                 
-                if let lowestPrice = carPriceWithOutDuplicate.min() {
-                    print ("minPrice is:  \(lowestPrice)")
+                if let lowestPrice = carPrice.min() {
                     self.priceSliderOutlet.minimumValue = Float(lowestPrice)
                     self.priceLabel.text = "\(lowestPrice) €"
                 }
-                if let highestPrice = carPriceWithOutDuplicate.max() {
+                
+                if let highestPrice = carPrice.max() {
                     self.priceSliderOutlet.maximumValue = Float(highestPrice)
-                    print("maxPrice is:  \(highestPrice)")
                 }
             }
         }
@@ -154,7 +137,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     @IBAction func searchButton(_ sender: UIButton) {
-        
         let ongoingCars = searching ? searchCar : carsArray
         
         var results = Cars()
@@ -195,7 +177,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let results3 = filteredByTransmission
         var results4 = Cars()
-        searching = true
         let carPossibleYearRange = Int(yearSlider.value)...Int(yearSlider.maximumValue)
         
         results4 = results3.filter({ (car) -> Bool in
@@ -211,6 +192,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         })
         
         searchCar = results5
+        searching = true
         tableView.reloadData()
     }
 }
@@ -222,20 +204,6 @@ extension ViewController: UISearchBarDelegate {
             return (car.make.contains(searchText)) || (car.model.contains(searchText))
         })
         tableView.reloadData()
-    }
-}
-
-extension Array where Element: Hashable {
-    func removingDuplicates() -> [Element] {
-        var addedDict = [Element: Bool]()
-        
-        return filter {
-            addedDict.updateValue(true, forKey: $0) == nil
-        }
-    }
-    
-    mutating func removeDuplicates() {
-        self = self.removingDuplicates()
     }
 }
 

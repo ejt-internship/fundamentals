@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import  SFundamentals
+import SFundamentals
 
 class TableViewCell: UITableViewCell {
     
