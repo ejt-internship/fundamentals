@@ -11,6 +11,10 @@ import SFundamentals
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet var viewForTableView: UIView!
+    @IBOutlet var tableViewOutlet: UITableView!
+    @IBOutlet var resetOutlet: UIButton!
+    @IBOutlet var searchOutlet: UIButton!
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var tableView: UITableView!
     
@@ -69,6 +73,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var searchCar = [Car]()
     var searching = false
     
+    var activityIndicatorView: UIActivityIndicatorView!
+    var rows: [String]?
+    let dispatchQueue = DispatchQueue(label: "Example Queue")
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searching {
             return searchCar.count
@@ -91,7 +99,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicatorView = UIActivityIndicatorView(style: .gray)
+        tableView.backgroundView = activityIndicatorView
+        searchOutlet.layer.cornerRadius = searchOutlet.frame.height / 4
+        searchOutlet.layer.shadowColor = UIColor.black.cgColor
+        searchOutlet.layer.shadowRadius = 5
+        searchOutlet.layer.shadowOpacity = 0.8
+        searchOutlet.layer.shadowOffset = CGSize(width: 0, height: 0)
         
+        resetOutlet.layer.cornerRadius = resetOutlet.frame.height / 2
+        resetOutlet.layer.shadowColor = UIColor.black.cgColor
+        resetOutlet.layer.shadowRadius = 5
+        resetOutlet.layer.shadowOpacity = 0.8
+        resetOutlet.layer.shadowOffset = CGSize(width: 0, height: 0)
+        
+        tableView.layer.borderWidth = 1
+        tableView.layer.borderColor = UIColor.gray.cgColor
+        tableView.layer.cornerRadius = tableViewOutlet.frame.height / 40
+        viewForTableView.layer.cornerRadius = viewForTableView.frame.height / 40
+        viewForTableView.layer.shadowColor = UIColor.black.cgColor
+        viewForTableView.layer.shadowRadius = 10
+        viewForTableView.layer.shadowOpacity = 0.8
+        viewForTableView.layer.shadowOffset = CGSize(width: 0, height: 0)
+
         for checkBox in bodyCheckboxes {
             checkBox.delegate = self
         }
@@ -125,6 +155,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 if let highestPrice = carPrice.max() {
                     self.priceSliderOutlet.maximumValue = Float(highestPrice)
+                }
+            }
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if (rows == nil) {
+            activityIndicatorView.startAnimating()
+            
+            tableView.separatorStyle = .none
+            
+            dispatchQueue.async {
+                Thread.sleep(forTimeInterval: 10)
+                OperationQueue.main.addOperation() {
+                    self.rows = ["One", "Two", "Three", "Four", "Five"]
+                    self.activityIndicatorView.stopAnimating()
+                    
+                    self.tableView.separatorStyle = .singleLine
+                    self.tableView.reloadData()
                 }
             }
         }
