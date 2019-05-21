@@ -11,7 +11,6 @@ import SFundamentals
 
 class TableViewCell: UITableViewCell {
     
-    
     @IBOutlet var make: UILabel!
     @IBOutlet var model: UILabel!
     @IBOutlet var body: UILabel!

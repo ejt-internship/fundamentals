@@ -15,7 +15,7 @@ class CheckBox: UIButton {
     
     let checkedImage = UIImage(named: "checked_checkbox")
     let unCheckedImage = UIImage(named: "unchecked_checkbox")
-    weak var delegate : UIButtonDelegate?
+    weak var delegate: UIButtonDelegate?
     var isChecked: Bool = false {
         didSet {
             self.updateImage()

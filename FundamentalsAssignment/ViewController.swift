@@ -233,9 +233,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return carPossibleYearRange ~= car.year
             
         })
+        if results4.isEmpty {
+            
+        }
         
         var results5 = Cars()
-        let possiblePriceRange = Int(priceSliderOutlet.value)...Int(priceSliderOutlet.maximumValue)
+        let possiblePriceRange = Int(priceSliderOutlet.minimumValue)...Int(priceSliderOutlet.value)
         
         results5 = results4.filter({ (car) -> Bool in
             return possiblePriceRange ~= car.price

@@ -339,7 +339,10 @@ class ViewControllerTests: XCTestCase {
 
         let expectedCars = [
             Car(identifier: "1", year: 2000),
-            Car(identifier: "4", year: maximumYear)
+            Car(identifier: "4", year: maximumYear),
+            Car(identifier: "2", year: 1955),
+            Car(identifier: "3", year: minimumYear),
+            Car(identifier: "5", year: 1999)
         ]
 
         let success = expectation(description: "Filter cars to have range of selected prices.")
@@ -355,11 +358,11 @@ class ViewControllerTests: XCTestCase {
             // Body - sedan,
             // Transmission - automatic,
             // Fuel type - gasoline.
-            viewController.priceSliderOutlet.minimumValue = 4200
+            viewController.priceSliderOutlet.minimumValue = 7200
             viewController.priceSliderOutlet.maximumValue = 29999
-            viewController.priceSliderOutlet.value = 8400
+            viewController.priceSliderOutlet.value = 28400
 
-            let expectedCarPriceRange = 8400...29999
+            let expectedCarPriceRange = 7200...28400
 
             viewController.searchButton(self.sender)
 
@@ -448,7 +451,7 @@ class ViewControllerTests: XCTestCase {
             viewController.priceSliderOutlet.maximumValue = 179993
             viewController.priceSliderOutlet.value = 5040
 
-            let expectedCarPriceRange = 5040...179993
+            let expectedCarPriceRange = 2520...5040
 
             viewController.searchButton(self.sender)
 
