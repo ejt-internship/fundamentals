@@ -54,7 +54,8 @@ class ViewControllerTests: XCTestCase {
             viewController.yearSlider.value = 0
 
             viewController.priceSliderOutlet.minimumValue = 0
-            viewController.priceSliderOutlet.value = 0
+            viewController.priceSliderOutlet.maximumValue = 179993
+            viewController.priceSliderOutlet.value = 179993
 
             let cabrioBodyCheckbox = viewController.bodyCheckboxes.first { $0.tag == 3 }
             cabrioBodyCheckbox?.isChecked = true
@@ -98,7 +99,8 @@ class ViewControllerTests: XCTestCase {
             viewController.yearSlider.value = 0
 
             viewController.priceSliderOutlet.minimumValue = 0
-            viewController.priceSliderOutlet.value = 0
+            viewController.priceSliderOutlet.maximumValue = 179993
+            viewController.priceSliderOutlet.value = 179993
 
             let hatchbackBodyCheckbox = viewController.bodyCheckboxes.first { $0.tag == 1 }
             hatchbackBodyCheckbox?.isChecked = true
@@ -137,7 +139,8 @@ class ViewControllerTests: XCTestCase {
             viewController.yearSlider.value = 0
 
             viewController.priceSliderOutlet.minimumValue = 0
-            viewController.priceSliderOutlet.value = 0
+            viewController.priceSliderOutlet.maximumValue = 179993
+            viewController.priceSliderOutlet.value = 179993
 
             let electricFuelCheckbox = viewController.fuelTypeCheckBoxes.first { $0.tag == 12 }
             electricFuelCheckbox?.isChecked = true
@@ -174,7 +177,8 @@ class ViewControllerTests: XCTestCase {
             viewController.yearSlider.value = 0
 
             viewController.priceSliderOutlet.minimumValue = 0
-            viewController.priceSliderOutlet.value = 0
+            viewController.priceSliderOutlet.maximumValue = 179993
+            viewController.priceSliderOutlet.value = 179993
 
             let cabrioBodyCheckbox = viewController.bodyCheckboxes.first { $0.tag == 3 }
             cabrioBodyCheckbox?.isChecked = true
@@ -214,7 +218,8 @@ class ViewControllerTests: XCTestCase {
             viewController.yearSlider.value = 0
 
             viewController.priceSliderOutlet.minimumValue = 0
-            viewController.priceSliderOutlet.value = 0
+            viewController.priceSliderOutlet.maximumValue = 179993
+            viewController.priceSliderOutlet.value = 179993
 
             let transmissionSwitch = viewController.gearSwitch
             transmissionSwitch?.isOn = false
@@ -254,7 +259,8 @@ class ViewControllerTests: XCTestCase {
             viewController.yearSlider.value = 0
 
             viewController.priceSliderOutlet.minimumValue = 0
-            viewController.priceSliderOutlet.value = 0
+            viewController.priceSliderOutlet.maximumValue = 179993
+            viewController.priceSliderOutlet.value = 179993
 
             let cabrioBodyCheckbox = viewController.bodyCheckboxes.first { $0.tag == 3 }
             cabrioBodyCheckbox?.isChecked = true
@@ -307,7 +313,8 @@ class ViewControllerTests: XCTestCase {
             viewController.yearSlider.value = 1980
 
             viewController.priceSliderOutlet.minimumValue = 0
-            viewController.priceSliderOutlet.value = 0
+            viewController.priceSliderOutlet.maximumValue = 179993
+            viewController.priceSliderOutlet.value = 179993
 
             viewController.searchButton(self.sender)
 
@@ -340,9 +347,8 @@ class ViewControllerTests: XCTestCase {
         let expectedCars = [
             Car(identifier: "1", year: 2000),
             Car(identifier: "4", year: maximumYear),
-            Car(identifier: "2", year: 1955),
-            Car(identifier: "3", year: minimumYear),
-            Car(identifier: "5", year: 1999)
+            Car(identifier: "5", year: 1999),
+            Car(identifier: "9", year: 1993)
         ]
 
         let success = expectation(description: "Filter cars to have range of selected prices.")
@@ -416,10 +422,10 @@ class ViewControllerTests: XCTestCase {
             Car(identifier: "1", body: .sedan, transmission: .manual, year: 2000, fuelType: .hydrogen),
             Car(identifier: "8", body: .sedan, transmission: .manual, year: 2001, fuelType: .hydrogen),
             Car(identifier: "12", body: .sedan, transmission: .manual, year: maximumYear, fuelType: .hydrogen),
+            Car(identifier: "13", body: .sedan, transmission: .manual, year: maximumYear, fuelType: .solar),
             Car(identifier: "22", body: .coupe, transmission: .manual, year: maximumYear, fuelType: .solar),
             Car(identifier: "25", body: .coupe, transmission: .manual, year: 2000, fuelType: .solar),
             Car(identifier: "27", body: .coupe, transmission: .manual, year: 2001, fuelType: .solar),
-            Car(identifier: "13", body: .sedan, transmission: .manual, year: maximumYear, fuelType: .solar),
         ]
 
         let success = expectation(description: "Filter cars to have selected bodies, fuel types, transmission, range of years and prices.")
@@ -444,21 +450,21 @@ class ViewControllerTests: XCTestCase {
 
             viewController.yearSlider.minimumValue = Float(minimumYear)
             viewController.yearSlider.maximumValue = Float(maximumYear)
-            viewController.yearSlider.value = 1990
+            viewController.yearSlider.value = 2000
 
             // Values from `SFundamentals` library based on expected year values
-            viewController.priceSliderOutlet.minimumValue = 2520
+            viewController.priceSliderOutlet.minimumValue = 5040
             viewController.priceSliderOutlet.maximumValue = 179993
-            viewController.priceSliderOutlet.value = 5040
+            viewController.priceSliderOutlet.value = 50000
 
-            let expectedCarPriceRange = 2520...5040
+            let expectedCarPriceRange = 5040...50000
 
             viewController.searchButton(self.sender)
 
             XCTAssert(viewController.searchCar.count == expectedCars.count, "Expected result count did not match, expected: \(expectedCars.count), got: \(viewController.searchCar.count).")
 
             for (index, car) in viewController.searchCar.enumerated() {
-                XCTAssert(car.isEqual(to: expectedCars[index]), "Filtered result item at index: \(index) did not match year expectation, expected: \(expectedCars[index]), got: \(car).")
+                XCTAssert(car.isEqual(to: expectedCars[index]), "Filtered result item at index: \(index) did not match year expectation, expected: \(expectedCars[index].make), got: \(car.make).")
                 XCTAssert(expectedCarPriceRange ~= car.price, "Filtered result item at index: \(index) did not match price expectation, expected: [\(expectedCarPriceRange.lowerBound)-\(expectedCarPriceRange.upperBound)], got: \(car.price).")
             }
 

@@ -146,7 +146,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     self.yearSlider.maximumValue = Float(highestYear)
                 }
                 
-                let carPrice = carValues.map{$0.price}
+                let carPrice = carValues.map{ $0.price }
                 
                 if let lowestPrice = carPrice.min() {
                     self.priceSliderOutlet.minimumValue = Float(lowestPrice)
@@ -233,9 +233,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return carPossibleYearRange ~= car.year
             
         })
-        if results4.isEmpty {
-            
-        }
         
         var results5 = Cars()
         let possiblePriceRange = Int(priceSliderOutlet.minimumValue)...Int(priceSliderOutlet.value)
